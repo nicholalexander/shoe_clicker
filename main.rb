@@ -20,33 +20,41 @@ Shoes.app do
   # draw initial screen
   @color_stack = stack do
     fill red
+    stroke red
     @red = rect left: 10, top: top, width: rainbow_width, height: rainbow_height
     top += rainbow_height
 
     fill orange
+    stroke orange
     @orange = rect left: 10, top: top, width: rainbow_width, height: rainbow_height
     top += rainbow_height
 
     fill yellow
+    stroke yellow
     @yellow = rect left: 10, top: top, width: rainbow_width, height: rainbow_height
     top += rainbow_height    
     
     fill green
+    stroke green
     @green = rect left: 10, top: top, width: rainbow_width, height: rainbow_height
     top += rainbow_height
     
     fill blue
+    stroke blue
     @blue = rect left: 10, top: top, width: rainbow_width, height: rainbow_height
     top += rainbow_height
     
     fill purple
+    stroke purple
     @purple = rect left: 10, top: top, width: rainbow_width, height: rainbow_height
     top += rainbow_height
     
     fill violet
+    stroke violet
     @violet = rect left: 10, top: top, width: rainbow_width, height: rainbow_height
     top += rainbow_height
     nofill
+    nostroke
   end
 
   @color_stack.contents.each do |rect|
@@ -57,12 +65,13 @@ Shoes.app do
     @game_counter = para "The game counter is #{@game.counter}"
     @game_clock = para "The game clock is #{@game.clock}"
     
-    @balance = para "The balance is #{@game.bank.balance}"
-    @factory = para "There are #{@game.factory.things.count} things."
+    @balance = para "You currently have #{@game.bank.balance} femtometers"
+    @total = para "The total femtometers created is #{@game.bank.total_manufactured}"
+    @factory = para "There are #{@game.factory.things.count} things in your factory."
   end
 
-  @button_stack = stack top: (top * 2) do
-    @clicker_button = button "clicker" do
+  @button_flow = flow top: (top * 2) do
+    @clicker_button = button "femtometer generator" do
       @game.bank.credit(1)
     end
 
@@ -92,18 +101,27 @@ Shoes.app do
       @game.bank.credit(@game.factory.run)
     end
 
+    # @game.bank.credit(@game.factory.run/FRAME_RATE)
+
     # render
-    @balance.text = "The balance is #{@game.bank.balance}"
+    @balance.text = "You currently have #{@game.bank.balance} femtometers in your light-well"
+    @total.text = "The total femtometers created is #{@game.bank.total_manufactured}"
     @game_counter.text = "The game counter is #{@game.counter}"
     @game_clock.text = "The game clock is #{@game.clock}"
-    @factory.text = "There are #{@game.factory.things.count} things."
+    @factory.text = "There are #{@game.factory.things.count} things in your factory."
 
     if @game.bank.balance > 50 || @game.counter > 1000
       @inferometer_builder.style(state: "enabled")
     end
 
-    if @game.counter > 1000
-      @red.show
+    # build a color every 1000 cycles
+    if @game.counter % 1000 == 0
+      @color_stack.contents.each do |color|
+        unless color.visible?
+          color.show
+          break
+        end
+      end
     end
 
   end
