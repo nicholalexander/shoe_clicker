@@ -1,5 +1,9 @@
 class Inferometer < Thing
 
+  def runnable?
+    true
+  end
+
   def run
     5
   end

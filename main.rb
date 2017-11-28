@@ -2,6 +2,7 @@ require 'lib/bank'
 require 'lib/factory'
 require 'lib/thing'
 require 'lib/thing/infermoter'
+require 'lib/thing/prisim'
 require 'lib/brain'
 require 'lib/game'
 
@@ -49,7 +50,7 @@ Shoes.app do
   end
 
   @color_stack.contents.each do |rect|
-    rect.toggle
+    rect.hide
   end
 
   @info_stack = stack top: (top + 10) do
@@ -69,6 +70,12 @@ Shoes.app do
       inferometer = Inferometer.new
       @game.factory.build(inferometer)
       @game.bank.withdraw(inferometer.cost)
+    end
+
+    @prisim_builder = button "prisim" do
+      prisim = Prisim.new
+      @game.factory.build(prisim)
+      @game.bank.withdraw(prisim.cost)
     end
     
     @inferometer_builder.style(state: "disabled")

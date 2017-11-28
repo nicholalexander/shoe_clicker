@@ -8,9 +8,18 @@ class Factory
   
   def run
     sum = 0
+    effects = []
 
     @things.each do |thing|
-      sum += thing.run
+      if thing.runnable?
+        sum += thing.run 
+      else
+        effects << thing
+      end
+    end
+
+    effects.each do |effect|
+      sum = effect.apply.call sum
     end
 
     return sum
