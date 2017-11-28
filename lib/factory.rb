@@ -2,9 +2,8 @@ class Factory
 
   attr_reader :things
   
-  def initialize(bank)
+  def initialize
     @things = []
-    @bank = bank
   end
   
   def run
@@ -15,6 +14,10 @@ class Factory
     end
 
     return sum
+  end
+
+  def build(thing)
+    @things << thing
   end
 
 end

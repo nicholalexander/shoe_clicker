@@ -1,7 +1,11 @@
 class Inferometer < Thing
 
   def run
-    return 5
+    5
+  end
+
+  def cost
+    10000
   end
 
 end
