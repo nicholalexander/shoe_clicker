@@ -12,13 +12,47 @@ Shoes.app do
   #setup game.
   @game = Game.new
 
-  
-  # background red, width: 100, right: 50
-  # background orange, width: 100, right: 100
+  rainbow_height = 20
+  rainbow_width = 300
+  top = 10
 
-  # arc 
-  
-  @info_stack = stack do
+  # draw initial screen
+  @color_stack = stack do
+    fill red
+    @red = rect left: 10, top: top, width: rainbow_width, height: rainbow_height
+    top += rainbow_height
+
+    fill orange
+    @orange = rect left: 10, top: top, width: rainbow_width, height: rainbow_height
+    top += rainbow_height
+
+    fill yellow
+    @yellow = rect left: 10, top: top, width: rainbow_width, height: rainbow_height
+    top += rainbow_height    
+    
+    fill green
+    @green = rect left: 10, top: top, width: rainbow_width, height: rainbow_height
+    top += rainbow_height
+    
+    fill blue
+    @blue = rect left: 10, top: top, width: rainbow_width, height: rainbow_height
+    top += rainbow_height
+    
+    fill purple
+    @purple = rect left: 10, top: top, width: rainbow_width, height: rainbow_height
+    top += rainbow_height
+    
+    fill violet
+    @violet = rect left: 10, top: top, width: rainbow_width, height: rainbow_height
+    top += rainbow_height
+    nofill
+  end
+
+  @color_stack.contents.each do |rect|
+    rect.toggle
+  end
+
+  @info_stack = stack top: (top + 10) do
     @game_counter = para "The game counter is #{@game.counter}"
     @game_clock = para "The game clock is #{@game.clock}"
     
@@ -26,7 +60,7 @@ Shoes.app do
     @factory = para "There are #{@game.factory.things.count} things."
   end
 
-  @button_stack = stack do
+  @button_stack = stack top: (top * 2) do
     @clicker_button = button "clicker" do
       @game.bank.credit(1)
     end
@@ -36,10 +70,11 @@ Shoes.app do
       @game.factory.build(inferometer)
       @game.bank.withdraw(inferometer.cost)
     end
+    
     @inferometer_builder.style(state: "disabled")
-
   end
 
+  # enter game loop
   @anim = animate FRAME_RATE do
 
     # update
@@ -58,6 +93,10 @@ Shoes.app do
 
     if @game.bank.balance > 50 || @game.counter > 1000
       @inferometer_builder.style(state: "enabled")
+    end
+
+    if @game.counter > 1000
+      @red.show
     end
 
   end
