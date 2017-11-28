@@ -88,6 +88,10 @@ Shoes.app do
     end
     
     @inferometer_builder.style(state: "disabled")
+    @prisim_builder.style(state: "disabled")
+
+    @inferometer_builder.hide
+    @prisim_builder.hide
   end
 
   # enter game loop
@@ -110,7 +114,11 @@ Shoes.app do
     @game_clock.text = "The game clock is #{@game.clock}"
     @factory.text = "There are #{@game.factory.things.count} things in your factory."
 
-    if @game.bank.balance > 50 || @game.counter > 1000
+    if @game.bank.balance > 50 || @game.counter > 100
+      @inferometer_builder.show unless @inferometer_builder.visible? 
+    end
+
+    if @game.bank.balance > 50
       @inferometer_builder.style(state: "enabled")
     end
 
