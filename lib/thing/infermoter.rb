@@ -5,7 +5,7 @@ class Inferometer < Thing
   end
 
   def cost
-    10000
+    100
   end
 
 end
