@@ -9,6 +9,8 @@ class Game
 
     @counter = 0
     @clock = 0
+
+    @factory.discover(FemtoGenerator.new)
   end
   
 end
