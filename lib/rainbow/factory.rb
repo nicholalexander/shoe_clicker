@@ -1,32 +1,27 @@
 class Factory
 
-  attr_reader :things
+  attr_reader :built_things, :available_things
   
   def initialize
-    @things = []
+    @built_things = []
+    @available_things = []
   end
   
   def run
     sum = 0
-    effects = []
 
-    @things.each do |thing|
-      if thing.runnable?
-        sum += thing.run 
-      else
-        effects << thing
-      end
-    end
-
-    effects.each do |effect|
-      sum = effect.apply.call sum
+    @built_things.each do |thing|
+      sum += thing.run if thing.runnable?
     end
 
     return sum
   end
 
   def build(thing)
-    @things << thing
+    @built_things << thing
   end
 
+  def discover(thing)
+    @available_things << thing
+  end
 end
