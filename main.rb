@@ -1,10 +1,12 @@
-require 'lib/bank'
-require 'lib/factory'
-require 'lib/thing'
-require 'lib/thing/infermoter'
-require 'lib/thing/prisim'
-require 'lib/brain'
-require 'lib/game'
+require 'lib/rainbow/bank'
+require 'lib/rainbow/factory'
+require 'lib/rainbow/thing'
+require 'lib/rainbow/thing/infermoter'
+require 'lib/rainbow/thing/prisim'
+require 'lib/rainbow/brain'
+require 'lib/rainbow/game'
+
+require 'lib/ui/factory_renderer'
 
 FRAME_RATE = 60
 
